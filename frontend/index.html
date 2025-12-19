@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat-Box | Real-time Group Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme">
+    <div class="theme-switch">
+        <button id="themeToggle" class="theme-btn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="login-container">
+        <div class="glass-card">
+            <div class="app-header">
+                <div class="app-logo">
+                    <i class="fas fa-comment-dots"></i>
+                    <h1>Chat-Box</h1>
+                </div>
+                <p class="app-tagline">Real-time group chat for everyone</p>
+            </div>
+
+            <div class="auth-body">
+                <div class="welcome-message">
+                    <h2>Welcome to Chat-Box</h2>
+                    <p>Enter your name and start chatting instantly</p>
+                </div>
+
+                <form id="joinForm" class="login-form">
+                    <div class="input-group">
+                        <i class="fas fa-user-circle"></i>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder="Enter your display name" 
+                            required 
+                            autocomplete="off"
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="room-info-display">
+                        <div class="room-badge">
+                            <i class="fas fa-hashtag"></i>
+                            <span>Public Chat Room</span>
+                        </div>
+                        <p>Join the main public chat where everyone is connected</p>
+                    </div>
+
+                    <button type="submit" class="join-btn">
+                        <i class="fas fa-rocket"></i> Enter Chat Room
+                    </button>
+                </form>
+
+                <div class="features">
+                    <h3>Features</h3>
+                    <div class="feature-icons">
+                        <div>
+                            <i class="fas fa-bolt"></i>
+                            <span>Real-time</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-image"></i>
+                            <span>Photos</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-video"></i>
+                            <span>Videos</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-smile"></i>
+                            <span>Emojis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="theme.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            
+            document.getElementById('joinForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                
+                if (username) {
+                    localStorage.setItem('chatBoxUsername', username);
+                    localStorage.setItem('chatBoxRoom', 'public-chat');
+                    
+                    const button = this.querySelector('.join-btn');
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        window.location.href = 'chat.html';
+                    }, 800);
+                }
+            });
+            
+            const storedUsername = localStorage.getItem('chatBoxUsername');
+            if (storedUsername) {
+                document.getElementById('username').value = storedUsername;
+            }
+        });
+    </script>
+</body>
+</html>
